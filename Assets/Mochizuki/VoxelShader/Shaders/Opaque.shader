@@ -121,7 +121,6 @@ Shader "Mochizuki/Voxel Shader/Opaque"
         }
         */
 
-        /*
         Pass {
             Tags {
                 "LightMode" = "ShadowCaster"
@@ -131,11 +130,13 @@ Shader "Mochizuki/Voxel Shader/Opaque"
 
             CGPROGRAM
 
+            #pragma require  geometry
+
             #pragma vertex   vs
-            // #pragma geometry gs
+            #pragma geometry gs
             #pragma fragment fs
 
-            #pragma multi_compile_fwdadd
+            #pragma multi_compile_shadowcaster
             #pragma multi_compile_fog
 
             #pragma target   4.5
@@ -147,7 +148,6 @@ Shader "Mochizuki/Voxel Shader/Opaque"
 
             ENDCG
         }
-        */
     }
 
     Fallback "Diffuse"

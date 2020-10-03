@@ -1,6 +1,8 @@
 
 // #include "core.cginc"
 
+#if defined(RENDER_PASS_FB)
+
 float4 fs(g2f i) : SV_TARGET {
     const float3 d = dot(i.normal, normalize(_WorldSpaceLightPos0.xyz));
 
@@ -15,3 +17,11 @@ float4 fs(g2f i) : SV_TARGET {
     return float4(frag, 1.0);
 #endif
 }
+
+#elif defined(RENDER_PASS_SC)
+
+float4 fs(g2f i) : SV_TARGET {
+    SHADOW_CASTER_FRAGMENT(i)
+}
+
+#endif

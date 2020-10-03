@@ -91,6 +91,34 @@
 
             ENDCG
         }
+
+        Pass {
+            Tags {
+                "LightMode" = "ShadowCaster"
+            }
+
+            ZWrite On
+
+            CGPROGRAM
+
+            #pragma require  geometry
+
+            #pragma vertex   vs
+            #pragma geometry gs
+            #pragma fragment fs
+
+            #pragma multi_compile_shadowcaster
+            #pragma multi_compile_fog
+
+            #pragma target   4.5
+
+            #define RENDER_AS_OPAQUE
+            #define RENDER_PASS_SC
+
+            #include "includes/core.cginc"
+
+            ENDCG
+        }
     }
 
     Fallback "Diffuse"

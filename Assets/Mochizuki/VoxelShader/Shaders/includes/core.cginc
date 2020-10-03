@@ -33,11 +33,15 @@ struct v2g {
 };
 
 struct g2f {
+#if defined(RENDER_PASS_FB)
     float4 pos       : SV_POSITION;
     float3 normal    : NORMAL;
     float2 uv        : TEXCOORD0;
 
     SHADOW_COORDS(1)
+#elif defined(RENDER_PASS_SC)
+    V2F_SHADOW_CASTER;
+#endif
 };
 
 #include "vert.cginc"

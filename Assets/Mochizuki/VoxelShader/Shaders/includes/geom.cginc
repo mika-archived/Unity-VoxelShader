@@ -2,6 +2,7 @@
 
 #define INPUT_VERTEXES 3
 
+
 inline float3 getVertexPosFromIndex(v2g i[INPUT_VERTEXES], uint index) {
     v2g v = i[index];
     return v.vertex.xyz;
@@ -52,11 +53,23 @@ inline float3 getMovedVertex(float3 vertex, float3 normal) {
 
 inline g2f getStreamData(float3 vertex, float3 normal, float2 uv, float3 oNormal) {
     g2f o = (g2f) 0;
+
+#if defined(RENDER_PASS_FB)
     o.pos    = UnityWorldToClipPos(getMovedVertex(vertex, oNormal));
     o.normal = normal;
     o.uv     = uv;
 
     TRANSFER_SHADOW(o);
+#elif defined(SHADOWS_CUBE) && !defined(SHADOWS_CUBE_IN_DEPTH_TEX)
+    o.pos    = UnityWorldToClipPos(getMovedVertex(vertex, oNormal));
+    o.shadow = vertex - _LightPositionRange.xyz;
+#elif defined(RENDER_PASS_SC)
+    const float3 pos1 = getMovedVertex(vertex, oNormal);
+    const float  cos  = dot(normal, normalize(UnityWorldSpaceLightDir(pos1)));
+    const float3 pos2 = pos1 - normal * unity_LightShadowBias.z * sqrt(1 - cos * cos);
+
+    o.pos = UnityApplyLinearShadowBias(UnityWorldToClipPos(float4(pos2, 1)));
+#endif
 
     return o;
 }
