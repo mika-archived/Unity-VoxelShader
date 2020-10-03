@@ -60,7 +60,10 @@ namespace Mochizuki.VoxelShader
             _ThinOutSource = FindProperty(nameof(_ThinOutSource), properties, false);
             _UVSamplingSource = FindProperty(nameof(_UVSamplingSource), properties, false);
             _VoxelMinSize = FindProperty(nameof(_VoxelMinSize), properties, false);
-            _VoxelOffset = FindProperty(nameof(_VoxelOffset), properties, false);
+            _VoxelOffsetN = FindProperty(nameof(_VoxelOffsetN), properties, false);
+            _VoxelOffsetX = FindProperty(nameof(_VoxelOffsetX), properties, false);
+            _VoxelOffsetY = FindProperty(nameof(_VoxelOffsetY), properties, false);
+            _VoxelOffsetZ = FindProperty(nameof(_VoxelOffsetZ), properties, false);
             _VoxelSize = FindProperty(nameof(_VoxelSize), properties, false);
             _VoxelSource = FindProperty(nameof(_VoxelSource), properties, false);
             _ZWrite = FindProperty(nameof(_ZWrite), properties, false);
@@ -132,7 +135,10 @@ namespace Mochizuki.VoxelShader
                 using (new EditorGUI.DisabledGroupScope(!IsEqualsTo(_VoxelSource, (int) VoxelSource.ShaderProperty)))
                     me.ShaderProperty(_VoxelSize, "Size");
 
-                me.ShaderProperty(_VoxelOffset, "Offset");
+                me.ShaderProperty(_VoxelOffsetN, "Offset Normal");
+                me.ShaderProperty(_VoxelOffsetX, "Offset X");
+                me.ShaderProperty(_VoxelOffsetY, "Offset Y");
+                me.ShaderProperty(_VoxelOffsetZ, "Offset Z");
             }
         }
 
@@ -229,7 +235,10 @@ namespace Mochizuki.VoxelShader
         private MaterialProperty _ThinOutSource;
         private MaterialProperty _UVSamplingSource;
         private MaterialProperty _VoxelMinSize;
-        private MaterialProperty _VoxelOffset;
+        private MaterialProperty _VoxelOffsetN;
+        private MaterialProperty _VoxelOffsetX;
+        private MaterialProperty _VoxelOffsetY;
+        private MaterialProperty _VoxelOffsetZ;
         private MaterialProperty _VoxelSize;
         private MaterialProperty _VoxelSource;
         private MaterialProperty _ZWrite;

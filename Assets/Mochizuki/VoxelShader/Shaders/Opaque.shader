@@ -10,7 +10,10 @@ Shader "Mochizuki/Voxel Shader/Opaque"
         _VoxelSource            ("Voxel Source",                 Int) = 1
         _VoxelMinSize           ("Voxel Minimal Size",         Float) = 0
         _VoxelSize              ("Voxel Size",                 Float) = 0.0125
-        _VoxelOffset            ("Voxel Offset",               Float) = 0
+        _VoxelOffsetN           ("Voxel offset Normal",        Float) = 0
+        _VoxelOffsetX           ("Voxel Offset X",             Float) = 0
+        _VoxelOffsetY           ("Voxel Offset Y",             Float) = 0
+        _VoxelOffsetZ           ("Voxel Offset X",             Float) = 0
         [Enum(Mochizuki.VoxelShader.UvSamplingSource)]
         _UVSamplingSource       ("UV Sampling Source",           Int) = 0
 
@@ -55,7 +58,7 @@ Shader "Mochizuki/Voxel Shader/Opaque"
         {
             "Queue" = "Geometry"
             "RenderType" = "Opaque"
-            "IgnoreProjector" = "True"
+            "IgnoreProjector" = "False"
         }
 
         Pass
@@ -128,9 +131,9 @@ Shader "Mochizuki/Voxel Shader/Opaque"
 
             CGPROGRAM
 
-            // #pragma vertex   vs
+            #pragma vertex   vs
             // #pragma geometry gs
-            // #pragma fragment fs
+            #pragma fragment fs
 
             #pragma multi_compile_fwdadd
             #pragma multi_compile_fog
@@ -140,7 +143,7 @@ Shader "Mochizuki/Voxel Shader/Opaque"
             #define RENDER_AS_OPAQUE
             #define RENDER_PASS_SC
 
-            // #include "includes/core.cginc"
+            #include "includes/core.cginc"
 
             ENDCG
         }

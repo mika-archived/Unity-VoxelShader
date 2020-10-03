@@ -42,9 +42,17 @@ inline float3 getVertex(float3 center, float x, float y, float z) {
     return center + mul(unity_ObjectToWorld, float4(x, y, z, 0.0)).xyz;
 }
 
-inline g2f getStreamData(float3 vertex, float3 normal, float2 uv) {
+inline float3 getMovedVertex(float3 vertex, float3 normal) {
+    return float3(
+        vertex.x + _VoxelOffsetX + normal.x * _VoxelOffsetN,
+        vertex.y + _VoxelOffsetY + normal.y * _VoxelOffsetN,
+        vertex.z + _VoxelOffsetZ + normal.z * _VoxelOffsetN
+    );
+}
+
+inline g2f getStreamData(float3 vertex, float3 normal, float2 uv, float3 oNormal) {
     g2f o = (g2f) 0;
-    o.pos    = UnityWorldToClipPos(vertex);
+    o.pos    = UnityWorldToClipPos(getMovedVertex(vertex, oNormal));
     o.normal = normal;
     o.uv     = uv;
 
@@ -128,10 +136,10 @@ void gs(triangle v2g i[INPUT_VERTEXES], uint id : SV_PRIMITIVEID, inout Triangle
 
         const float3 n = calcNormal(a, b, c);
 
-        stream.Append(getStreamData(a + f, n, uv));
-        stream.Append(getStreamData(b + f, n, uv));
-        stream.Append(getStreamData(c + f, n, uv));
-        stream.Append(getStreamData(d + f, n, uv));
+        stream.Append(getStreamData(a + f, n, uv, o));
+        stream.Append(getStreamData(b + f, n, uv, o));
+        stream.Append(getStreamData(c + f, n, uv, o));
+        stream.Append(getStreamData(d + f, n, uv, o));
         stream.RestartStrip();
     }
 
@@ -144,10 +152,10 @@ void gs(triangle v2g i[INPUT_VERTEXES], uint id : SV_PRIMITIVEID, inout Triangle
 
         const float3 n = calcNormal(a, b, c);
 
-        stream.Append(getStreamData(a + f, n, uv));
-        stream.Append(getStreamData(b + f, n, uv));
-        stream.Append(getStreamData(c + f, n, uv));
-        stream.Append(getStreamData(d + f, n, uv));
+        stream.Append(getStreamData(a + f, n, uv, o));
+        stream.Append(getStreamData(b + f, n, uv, o));
+        stream.Append(getStreamData(c + f, n, uv, o));
+        stream.Append(getStreamData(d + f, n, uv, o));
         stream.RestartStrip();
     }
 
@@ -160,10 +168,10 @@ void gs(triangle v2g i[INPUT_VERTEXES], uint id : SV_PRIMITIVEID, inout Triangle
 
         const float3 n = calcNormal(a, b, c);
 
-        stream.Append(getStreamData(a + f, n, uv));
-        stream.Append(getStreamData(b + f, n, uv));
-        stream.Append(getStreamData(c + f, n, uv));
-        stream.Append(getStreamData(d + f, n, uv));
+        stream.Append(getStreamData(a + f, n, uv, o));
+        stream.Append(getStreamData(b + f, n, uv, o));
+        stream.Append(getStreamData(c + f, n, uv, o));
+        stream.Append(getStreamData(d + f, n, uv, o));
         stream.RestartStrip();
     }
 
@@ -176,10 +184,10 @@ void gs(triangle v2g i[INPUT_VERTEXES], uint id : SV_PRIMITIVEID, inout Triangle
 
         const float3 n = calcNormal(a, b, c);
 
-        stream.Append(getStreamData(a + f, n, uv));
-        stream.Append(getStreamData(b + f, n, uv));
-        stream.Append(getStreamData(c + f, n, uv));
-        stream.Append(getStreamData(d + f, n, uv));
+        stream.Append(getStreamData(a + f, n, uv, o));
+        stream.Append(getStreamData(b + f, n, uv, o));
+        stream.Append(getStreamData(c + f, n, uv, o));
+        stream.Append(getStreamData(d + f, n, uv, o));
         stream.RestartStrip();
     }
 
@@ -192,10 +200,10 @@ void gs(triangle v2g i[INPUT_VERTEXES], uint id : SV_PRIMITIVEID, inout Triangle
 
         const float3 n = calcNormal(a, b, c);
 
-        stream.Append(getStreamData(a + f, n, uv));
-        stream.Append(getStreamData(b + f, n, uv));
-        stream.Append(getStreamData(c + f, n, uv));
-        stream.Append(getStreamData(d + f, n, uv));
+        stream.Append(getStreamData(a + f, n, uv, o));
+        stream.Append(getStreamData(b + f, n, uv, o));
+        stream.Append(getStreamData(c + f, n, uv, o));
+        stream.Append(getStreamData(d + f, n, uv, o));
         stream.RestartStrip();
     }
 
@@ -208,10 +216,10 @@ void gs(triangle v2g i[INPUT_VERTEXES], uint id : SV_PRIMITIVEID, inout Triangle
 
         const float3 n = calcNormal(a, b, c);
 
-        stream.Append(getStreamData(a + f, n, uv));
-        stream.Append(getStreamData(b + f, n, uv));
-        stream.Append(getStreamData(c + f, n, uv));
-        stream.Append(getStreamData(d + f, n, uv));
+        stream.Append(getStreamData(a + f, n, uv, o));
+        stream.Append(getStreamData(b + f, n, uv, o));
+        stream.Append(getStreamData(c + f, n, uv, o));
+        stream.Append(getStreamData(d + f, n, uv, o));
         stream.RestartStrip();
     }
 }

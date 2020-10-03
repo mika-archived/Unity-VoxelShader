@@ -11,7 +11,10 @@
         _VoxelSource            ("Voxel Source",                 Int) = 1
         _VoxelMinSize           ("Voxel Minimal Size",         Float) = 0
         _VoxelSize              ("Voxel Size",                 Float) = 0.0125
-        _VoxelOffset            ("Voxel Offset",               Float) = 0
+        _VoxelOffsetN           ("Voxel offset Normal",        Float) = 0
+        _VoxelOffsetX           ("Voxel Offset X",             Float) = 0
+        _VoxelOffsetY           ("Voxel Offset Y",             Float) = 0
+        _VoxelOffsetZ           ("Voxel Offset X",             Float) = 0
         [Enum(Mochizuki.VoxelShader.UvSamplingSource)]
         _UVSamplingSource       ("UV Sampling Source",           Int) = 0
 

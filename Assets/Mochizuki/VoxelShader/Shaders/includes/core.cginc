@@ -9,7 +9,10 @@ uniform float     _Alpha;
 uniform int       _VoxelSource;
 uniform float     _VoxelMinSize;
 uniform float     _VoxelSize;
-uniform float     _VoxelOffset;
+uniform float     _VoxelOffsetN;
+uniform float     _VoxelOffsetX;
+uniform float     _VoxelOffsetY;
+uniform float     _VoxelOffsetZ;
 uniform int       _UVSamplingSource;
 
 uniform int       _EnableAnimation;
