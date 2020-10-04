@@ -60,7 +60,7 @@
             "IgnoreProjector" = "True"
         }
 
-        LOD 100
+        LOD 0
 
         Pass
         {
@@ -68,7 +68,8 @@
                 "LightMode" = "ForwardBase"
             }
 
-            Cull Off
+            Cull   [_Culling]
+            ZWrite [_ZWrite]
             Blend SrcAlpha OneMinusSrcAlpha
             
             CGPROGRAM
@@ -84,7 +85,7 @@
 
             #pragma target   4.5
 
-            #define RENDER_AS_TRANSPARENT
+            #define RENDER_MODE_TRANSPARENT
             #define RENDER_PASS_FB
 
             #include "includes/core.cginc"
@@ -112,7 +113,7 @@
 
             #pragma target   4.5
 
-            #define RENDER_AS_OPAQUE
+            #define RENDER_MODE_OPAQUE
             #define RENDER_PASS_SC
 
             #include "includes/core.cginc"

@@ -83,7 +83,7 @@ Shader "Mochizuki/Voxel Shader/Opaque"
 
             #pragma target   4.5
 
-            #define RENDER_AS_OPAQUE
+            #define RENDER_MODE_OPAQUE
             #define RENDER_PASS_FB
 
             #include "includes/core.cginc"
@@ -112,7 +112,7 @@ Shader "Mochizuki/Voxel Shader/Opaque"
 
             #pragma target   4.5
 
-            #define RENDER_AS_OPAQUE
+            #define RENDER_MODE_OPAQUE
             #define RENDER_PASS_FA
 
             // #include "includes/core.cginc"
@@ -141,7 +141,7 @@ Shader "Mochizuki/Voxel Shader/Opaque"
 
             #pragma target   4.5
 
-            #define RENDER_AS_OPAQUE
+            #define RENDER_MODE_OPAQUE
             #define RENDER_PASS_SC
 
             #include "includes/core.cginc"
