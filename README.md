@@ -4,14 +4,23 @@ Mesh Voxelization Shader for Unity and VRChat.
 
 <img src="https://user-images.githubusercontent.com/10832834/94378296-5a1a5f80-0163-11eb-97e6-6018fc61cc7b.PNG" width="400px">
 
-## Limitations
-
-This shader owns pretty mush the same features as Natsuneko uses in VRChat, but there are a few differences to be exact.
-
 ## Requirements
 
 - Unity 2018.4.20f1
-- GPU that supporting Geometry Shader Stage
+- GPU and Graphics API that supporting Geometry Shader Stage
+
+## Features
+
+- Voxelization
+  - Mesh (Triangle) Voxelization
+  - Voxel Animation and Moving
+  - Thin Outing
+- Support Toon Lighting and Shadows
+- Support Unlit (Unlighting = 1)
+
+## Limitations
+
+This shader owns pretty mush the same features as Natsuneko uses in VRChat, but there are a few differences to be exact.
 
 ## Installation (Not Yet Provided)
 

@@ -1,4 +1,9 @@
-﻿Shader "Mochizuki/Voxel Shader/Transparent"
+﻿/*-------------------------------------------------------------------------------------------
+ * Copyright (c) Fuyuno Mikazuki / Natsuneko. All rights reserved.
+ * Licensed under the MIT License. See LICENSE in the project root for license information.
+ *------------------------------------------------------------------------------------------*/
+
+Shader "Mochizuki/Voxel Shader/Transparent"
 {
     Properties
     {
