@@ -1,4 +1,3 @@
-
 // #include "core.cginc"
 
 #if defined(RENDER_PASS_FB)

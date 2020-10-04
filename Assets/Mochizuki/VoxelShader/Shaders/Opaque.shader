@@ -63,7 +63,8 @@ Shader "Mochizuki/Voxel Shader/Opaque"
 
         Pass
         {
-            Tags {
+            Tags 
+            {
                 "LightMode" = "ForwardBase"
             }
 
@@ -121,8 +122,10 @@ Shader "Mochizuki/Voxel Shader/Opaque"
         }
         */
 
-        Pass {
-            Tags {
+        Pass
+        {
+            Tags
+            {
                 "LightMode" = "ShadowCaster"
             }
 

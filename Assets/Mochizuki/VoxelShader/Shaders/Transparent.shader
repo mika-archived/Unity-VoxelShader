@@ -64,7 +64,8 @@
 
         Pass
         {
-            Tags {
+            Tags
+            {
                 "LightMode" = "ForwardBase"
             }
 
@@ -93,8 +94,10 @@
             ENDCG
         }
 
-        Pass {
-            Tags {
+        Pass
+        {
+            Tags
+            {
                 "LightMode" = "ShadowCaster"
             }
 

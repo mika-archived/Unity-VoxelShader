@@ -2,7 +2,6 @@
 
 #define INPUT_VERTEXES 3
 
-
 inline float3 getVertexPosFromIndex(v2g i[INPUT_VERTEXES], uint index) {
     v2g v = i[index];
     return v.vertex.xyz;
