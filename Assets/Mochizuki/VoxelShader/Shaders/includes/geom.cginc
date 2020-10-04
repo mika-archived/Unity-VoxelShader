@@ -44,10 +44,12 @@ inline float3 getVertex(float3 center, float x, float y, float z) {
 }
 
 inline float3 getMovedVertex(float3 vertex, float3 normal) {
+    const float3 offset = mul(unity_ObjectToWorld, float4(_VoxelOffsetX, _VoxelOffsetY, _VoxelOffsetZ, 0.0)).xyz;
+
     return float3(
-        vertex.x + _VoxelOffsetX + normal.x * _VoxelOffsetN,
-        vertex.y + _VoxelOffsetY + normal.y * _VoxelOffsetN,
-        vertex.z + _VoxelOffsetZ + normal.z * _VoxelOffsetN
+        vertex.x + offset.x + normal.x * _VoxelOffsetN,
+        vertex.y + offset.y + normal.y * _VoxelOffsetN,
+        vertex.z + offset.z + normal.z * _VoxelOffsetN
     );
 }
 
