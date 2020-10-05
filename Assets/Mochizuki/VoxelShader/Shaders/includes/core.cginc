@@ -11,6 +11,7 @@ uniform sampler2D _MainTex;
 uniform float4    _MainTex_ST;
 uniform float     _Alpha;
 
+uniform int       _EnableVoxelization;
 uniform int       _VoxelSource;
 uniform float     _VoxelMinSize;
 uniform float     _VoxelSize;

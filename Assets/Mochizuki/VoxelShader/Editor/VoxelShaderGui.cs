@@ -55,6 +55,7 @@ namespace Mochizuki.VoxelShader
             _Culling = FindProperty(nameof(_Culling), properties, false);
             _EnableAnimation = FindProperty(nameof(_EnableAnimation), properties, false);
             _EnableThinOut = FindProperty(nameof(_EnableThinOut), properties, false);
+            _EnableVoxelization = FindProperty(nameof(_EnableVoxelization), properties, false);
             _MainTex = FindProperty(nameof(_MainTex), properties, false);
             _ThinOutMaskTex = FindProperty(nameof(_ThinOutMaskTex), properties, false);
             _ThinOutMinSize = FindProperty(nameof(_ThinOutMinSize), properties, false);
@@ -132,18 +133,23 @@ namespace Mochizuki.VoxelShader
             {
                 GUILayout.Label("Voxelization", EditorStyles.boldLabel);
 
-                me.ShaderProperty(_VoxelSource, "Source");
-                me.ShaderProperty(_UVSamplingSource, "UV Sampling Source");
+                me.ShaderProperty(_EnableVoxelization, "Enable Voxelization");
 
-                using (new EditorGUI.DisabledGroupScope(!IsEqualsTo(_VoxelSource, (int) VoxelSource.Vertex)))
-                    me.ShaderProperty(_VoxelMinSize, "Minimal Size");
-                using (new EditorGUI.DisabledGroupScope(!IsEqualsTo(_VoxelSource, (int) VoxelSource.ShaderProperty)))
-                    me.ShaderProperty(_VoxelSize, "Size");
+                using (new EditorGUI.DisabledGroupScope(!IsEqualsTo(_EnableVoxelization, true)))
+                {
+                    me.ShaderProperty(_VoxelSource, "Source");
+                    me.ShaderProperty(_UVSamplingSource, "UV Sampling Source");
 
-                me.ShaderProperty(_VoxelOffsetN, "Offset Normal");
-                me.ShaderProperty(_VoxelOffsetX, "Offset X");
-                me.ShaderProperty(_VoxelOffsetY, "Offset Y");
-                me.ShaderProperty(_VoxelOffsetZ, "Offset Z");
+                    using (new EditorGUI.DisabledGroupScope(!IsEqualsTo(_VoxelSource, (int) VoxelSource.Vertex)))
+                        me.ShaderProperty(_VoxelMinSize, "Minimal Size");
+                    using (new EditorGUI.DisabledGroupScope(!IsEqualsTo(_VoxelSource, (int) VoxelSource.ShaderProperty)))
+                        me.ShaderProperty(_VoxelSize, "Size");
+
+                    me.ShaderProperty(_VoxelOffsetN, "Offset Normal");
+                    me.ShaderProperty(_VoxelOffsetX, "Offset X");
+                    me.ShaderProperty(_VoxelOffsetY, "Offset Y");
+                    me.ShaderProperty(_VoxelOffsetZ, "Offset Z");
+                }
             }
         }
 
@@ -230,6 +236,7 @@ namespace Mochizuki.VoxelShader
         private MaterialProperty _Culling;
         private MaterialProperty _EnableAnimation;
         private MaterialProperty _EnableThinOut;
+        private MaterialProperty _EnableVoxelization;
         private MaterialProperty _MainTex;
         private MaterialProperty _ThinOutMaskTex;
         private MaterialProperty _ThinOutMinSize;

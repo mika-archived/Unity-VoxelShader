@@ -11,6 +11,8 @@ Shader "Mochizuki/Voxel Shader/Opaque"
         _MainTex                ("Main Texture",                  2D) = "white" {}
 
         // Voxel
+        [ToggleWithoutKeyword]
+        _EnableVoxelization     ("Enable Voxelization",          Int) = 1
         [Enum(Mochizuki.VoxelShader.VoxelSource)]
         _VoxelSource            ("Voxel Source",                 Int) = 1
         _VoxelMinSize           ("Voxel Minimal Size",         Float) = 0
@@ -73,6 +75,7 @@ Shader "Mochizuki/Voxel Shader/Opaque"
                 "LightMode" = "ForwardBase"
             }
 
+            Name   "FORWARD_BASE"
             Cull   [_Culling]
             ZWrite [_ZWrite]
             
@@ -134,6 +137,7 @@ Shader "Mochizuki/Voxel Shader/Opaque"
                 "LightMode" = "ShadowCaster"
             }
 
+            Name   "SHADOW_CASTER"
             ZWrite On
 
             CGPROGRAM

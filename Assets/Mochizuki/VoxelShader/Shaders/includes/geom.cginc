@@ -82,6 +82,19 @@ inline g2f getStreamData(float3 vertex, float3 normal, float2 uv, float3 oNormal
 
 [maxvertexcount(24)]
 void gs(triangle v2g i[INPUT_VERTEXES], uint id : SV_PRIMITIVEID, inout TriangleStream<g2f> stream) {
+
+    if (_EnableVoxelization == 0) {
+        [unroll]
+        for (int j = 0; j < 3; j++) {
+            const float3 vertex = getVertexPosFromIndex(i, j);
+            const float2 uv     = getVertexUVFromIndex(i, j);
+            const float3 normal = i[j].normal;
+
+            stream.Append(getStreamData(vertex, normal, uv, normal));
+        }
+        return;
+    }
+
     const float2 u1 = getVertexUVFromIndex(i, 0);
     const float2 u2 = getVertexUVFromIndex(i, 0);
     const float2 u3 = getVertexUVFromIndex(i, 0);

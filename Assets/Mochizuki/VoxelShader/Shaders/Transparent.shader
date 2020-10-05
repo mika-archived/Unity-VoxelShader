@@ -12,6 +12,8 @@ Shader "Mochizuki/Voxel Shader/Transparent"
         _Alpha                  ("Alpha",                Range(0, 1)) = 1
 
         // Voxel
+        [ToggleWithoutKeyword]
+        _EnableVoxelization     ("Enable Voxelization",          Int) = 1
         [Enum(Mochizuki.VoxelShader.VoxelSource)]
         _VoxelSource            ("Voxel Source",                 Int) = 1
         _VoxelMinSize           ("Voxel Minimal Size",         Float) = 0
@@ -74,6 +76,7 @@ Shader "Mochizuki/Voxel Shader/Transparent"
                 "LightMode" = "ForwardBase"
             }
 
+            Name   "FORWARD_BASE"
             Cull   [_Culling]
             ZWrite [_ZWrite]
             Blend SrcAlpha OneMinusSrcAlpha
@@ -106,6 +109,7 @@ Shader "Mochizuki/Voxel Shader/Transparent"
                 "LightMode" = "ShadowCaster"
             }
 
+            Name   "SHADOW_CASTER"
             ZWrite On
 
             CGPROGRAM
