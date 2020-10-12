@@ -17,6 +17,7 @@ Mesh Voxelization Shader for Unity and VRChat.
   - Thin Outing
 - Support Toon Lighting and Shadows
 - Support Unlit (Unlighting = 1)
+- Support Stencil
 
 ## Limitations
 
