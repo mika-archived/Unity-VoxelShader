@@ -45,6 +45,7 @@ namespace Mochizuki.VoxelShader
         private const int VersionPatch = 0;
 
         private bool _isInitialized;
+        private bool _isStencil;
         private bool _isTransparent;
 
         public override void OnGUI(MaterialEditor me, MaterialProperty[] properties)
@@ -57,6 +58,11 @@ namespace Mochizuki.VoxelShader
             _EnableThinOut = FindProperty(nameof(_EnableThinOut), properties, false);
             _EnableVoxelization = FindProperty(nameof(_EnableVoxelization), properties, false);
             _MainTex = FindProperty(nameof(_MainTex), properties, false);
+            _StencilCompare = FindProperty(nameof(_StencilCompare), properties, false);
+            _StencilFail = FindProperty(nameof(_StencilFail), properties, false);
+            _StencilPass = FindProperty(nameof(_StencilPass), properties, false);
+            _StencilReference = FindProperty(nameof(_StencilReference), properties, false);
+            _StencilZFail = FindProperty(nameof(_StencilZFail), properties, false);
             _ThinOutMaskTex = FindProperty(nameof(_ThinOutMaskTex), properties, false);
             _ThinOutMinSize = FindProperty(nameof(_ThinOutMinSize), properties, false);
             _ThinOutNoiseTex = FindProperty(nameof(_ThinOutNoiseTex), properties, false);
@@ -75,6 +81,7 @@ namespace Mochizuki.VoxelShader
             _ZWrite = FindProperty(nameof(_ZWrite), properties, false);
 
             _isTransparent = material.shader.name.Contains("Transparent");
+            _isStencil = material.shader.name.Contains("Stencil");
 
             OnInitialize(material);
 
@@ -82,6 +89,8 @@ namespace Mochizuki.VoxelShader
             OnVoxelGui(me);
             OnAnimationGui(me);
             OnThinOutGui(me);
+            if (_isStencil)
+                OnStencilGui(me);
             OnOthersGui(me);
 
             using (new EditorGUILayout.VerticalScope())
@@ -192,6 +201,20 @@ namespace Mochizuki.VoxelShader
             }
         }
 
+        private void OnStencilGui(MaterialEditor me)
+        {
+            using (new Section("Stencil"))
+            {
+                GUILayout.Label("Stencil", EditorStyles.boldLabel);
+
+                me.ShaderProperty( _StencilReference, "Reference");
+                me.ShaderProperty(_StencilCompare, "Compare");
+                me.ShaderProperty(_StencilPass, "Pass");
+                me.ShaderProperty(_StencilFail, "Fail");
+                me.ShaderProperty(_StencilZFail, "ZFail");
+            }
+        }
+
         private void OnOthersGui(MaterialEditor me)
         {
             using (new Section("Others"))
@@ -238,6 +261,11 @@ namespace Mochizuki.VoxelShader
         private MaterialProperty _EnableThinOut;
         private MaterialProperty _EnableVoxelization;
         private MaterialProperty _MainTex;
+        private MaterialProperty _StencilCompare;
+        private MaterialProperty _StencilFail;
+        private MaterialProperty _StencilPass;
+        private MaterialProperty _StencilReference;
+        private MaterialProperty _StencilZFail;
         private MaterialProperty _ThinOutMaskTex;
         private MaterialProperty _ThinOutMinSize;
         private MaterialProperty _ThinOutNoiseTex;

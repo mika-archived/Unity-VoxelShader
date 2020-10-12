@@ -3,12 +3,13 @@
  * Licensed under the MIT License. See LICENSE in the project root for license information.
  *------------------------------------------------------------------------------------------*/
 
-Shader "Mochizuki/Voxel Shader/Opaque"
+Shader "Mochizuki/Voxel Shader/[Stencil]/Transparent"
 {
     Properties
     {
         // Main
         _MainTex                ("Main Texture",                  2D) = "white" {}
+        _Alpha                  ("Alpha",                Range(0, 1)) = 1
 
         // Voxel
         [ToggleWithoutKeyword]
@@ -42,35 +43,46 @@ Shader "Mochizuki/Voxel Shader/Opaque"
         _ThinOutNoiseThresholdB ("ThinOut Noise Threshold B",  Float) = 1
         _ThinOutMinSize         ("ThinOut Minimal Size",       Float) = 1
 
+        // Stencil
+        _StencilReference       ("Stencil Reference",  Range(0, 255)) = 0
+        [Enum(UnityEngine.Rendering.CompareFunction)]
+        _StencilCompare         ("Stencil Compare Mode",         Int) = 8
+        [Enum(UnityEngine.Rendering.StencilOp)]
+        _StencilPass            ("Stencil Pass Operation",       Int) = 0
+        [Enum(UnityEngine.Rendering.StencilOp)]
+        _StencilFail            ("Stencil Fail Operation",       Int) = 0
+        [Enum(UnityEngine.Rendering.StencilOp)]
+        _StencilZFail           ("Stencil ZFail Operation",      Int) = 0
+
         // Advanced
         [Enum(UnityEngine.Rendering.CullMode)]
-        _Culling                ("Culling",                      Int) = 0
+        _Culling                ("Culling",                     Int) = 0
         [Enum(Off,0,On,1)]
-        _ZWrite                 ("_ZWrite",                      Int) = 0
+        _ZWrite                 ("_ZWrite",                     Int) = 0
 
         // Meta
         [HideInInspector]
-        _VersionMajor           ("Major Version",                Int) = 0
+        _VersionMajor           ("Major Version",               Int) = 0
         [HideInInspector]
-        _VersionMinor           ("Minor Version",                Int) = 0
+        _VersionMinor           ("Minor Version",               Int) = 0
         [HideInInspector]
-        _VersionPatch           ("Patch Version",                Int) = 0
+        _VersionPatch           ("Patch Version",               Int) = 0
     }
 
     SubShader
     {
-        LOD 0
-
         Tags
         {
-            "Queue" = "Geometry"
-            "RenderType" = "Opaque"
-            "IgnoreProjector" = "False"
+            "Queue" = "Transparent"
+            "RenderType" = "Transparent"
+            "IgnoreProjector" = "True"
         }
+
+        LOD 0
 
         Pass
         {
-            Tags 
+            Tags
             {
                 "LightMode" = "ForwardBase"
             }
@@ -78,7 +90,16 @@ Shader "Mochizuki/Voxel Shader/Opaque"
             Name   "FORWARD_BASE"
             Cull   [_Culling]
             ZWrite [_ZWrite]
+            Blend SrcAlpha OneMinusSrcAlpha
             
+            Stencil {
+                Ref   [_StencilReference]
+                Comp  [_StencilCompare]
+                Pass  [_StencilPass]
+                Fail  [_StencilFail]
+                ZFail [_StencilZFail]
+            }
+
             CGPROGRAM
 
             #pragma require  geometry
@@ -92,43 +113,13 @@ Shader "Mochizuki/Voxel Shader/Opaque"
 
             #pragma target   4.5
 
-            #define RENDER_MODE_OPAQUE
+            #define RENDER_MODE_TRANSPARENT
             #define RENDER_PASS_FB
 
-            #include "includes/core.cginc"
+            #include "../includes/core.cginc"
 
             ENDCG
         }
-
-        /*
-        Pass
-        {
-            Tags {
-                "LightMode" = "ForwardAdd"
-            }
-
-            Cull   [_Culling]
-            ZWrite Off
-
-            CGPROGRAM
-
-            // #pragma vertex   vs
-            // #pragma geometry gs
-            // #pragma fragment fs
-
-            #pragma multi_compile_fwdadd
-            #pragma multi_compile_fog
-
-            #pragma target   4.5
-
-            #define RENDER_MODE_OPAQUE
-            #define RENDER_PASS_FA
-
-            // #include "includes/core.cginc"
-
-            ENDCG
-        }
-        */
 
         Pass
         {
@@ -156,7 +147,7 @@ Shader "Mochizuki/Voxel Shader/Opaque"
             #define RENDER_MODE_OPAQUE
             #define RENDER_PASS_SC
 
-            #include "includes/core.cginc"
+            #include "../includes/core.cginc"
 
             ENDCG
         }
