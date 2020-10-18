@@ -66,6 +66,8 @@ inline g2f getStreamData(float3 vertex, float3 normal, float2 uv, float3 oNormal
     o.uv     = uv;
 
     TRANSFER_SHADOW(o);
+    UNITY_TRANSFER_FOG(o, o.pos);
+
 #elif defined(SHADOWS_CUBE) && !defined(SHADOWS_CUBE_IN_DEPTH_TEX)
     o.pos    = UnityWorldToClipPos(getMovedVertex(vertex, oNormal));
     o.shadow = vertex - _LightPositionRange.xyz;

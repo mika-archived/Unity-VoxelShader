@@ -5,21 +5,38 @@
 
 // #include "core.cginc"
 
+#if defined(RENDER_PASS_FB) || defined(RENDER_PASS_FA)
+
+float4 getFragmentColor(float3 color, float alpha = 1.0) {
 #if defined(RENDER_PASS_FB)
+    return float4(color, alpha);
+#else
+    return lerp(float4(color, alpha), float4(color, 0.0), _Unlighting);
+#endif
+}
 
 float4 fs(g2f i) : SV_TARGET {
-    const float3 d = dot(i.normal, normalize(_WorldSpaceLightPos0.xyz));
-
+    const float3 lightColor = _LightColor0.rgb * LIGHT_ATTENUATION(i);
     const float3 color  = tex2D(_MainTex, i.uv).rgb;
-    const float3 light  = (d * 0.5 + 0.5) * _LightColor0.rgb * LIGHT_ATTENUATION(i);
-    const float3 shadow = max(light * SHADOW_ATTENUATION(i), 0.5) + 0.25;
+
+#if defined(RENDER_PAS_FB)
+    const float3 lightBase = _LightColor0.rgb;
+#else
+    const float3 lightBase = _LightColor0.rgb * LIGHT_ATTENUATION(i);
+#endif
+
+    const float3 shadow = max(lightBase * SHADOW_ATTENUATION(i), 0.5) + 0.25;
     const float3 frag   = color * shadow;
 
 #if defined(RENDER_MODE_TRANSPARENT)
-    return lerp(float4(frag, 0), float4(frag, 1.0), _Alpha);
+    float4 fragWithAlpha = getFragmentColor(frag, _Alpha);
 #else
-    return float4(frag, 1.0);
+    float4 fragWithAlpha = getFragmentColor(frag);
 #endif
+
+    UNITY_APPLY_FOG(i.fogCoord, fragWithAlpha);
+
+    return fragWithAlpha;
 }
 
 #elif defined(RENDER_PASS_SC)

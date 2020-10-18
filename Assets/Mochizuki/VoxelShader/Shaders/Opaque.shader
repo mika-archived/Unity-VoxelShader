@@ -103,7 +103,8 @@ Shader "Mochizuki/Voxel Shader/Opaque"
         /*
         Pass
         {
-            Tags {
+            Tags
+            {
                 "LightMode" = "ForwardAdd"
             }
 

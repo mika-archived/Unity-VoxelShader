@@ -45,6 +45,7 @@ struct g2f {
     float2 uv        : TEXCOORD0;
 
     SHADOW_COORDS(1)
+    SHADOW_COORDS(4)
 #elif defined(RENDER_PASS_SC)
     V2F_SHADOW_CASTER;
 #endif
